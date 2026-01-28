@@ -41,25 +41,13 @@ export default function RootLayout({
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link href="/contact" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Contact
-                    </NavigationMenuLink>
-                  </Link>
+                  <Link href={"/contact"} className={navigationMenuTriggerStyle()}>Contact</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/admin" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Admin
-                    </NavigationMenuLink>
-                  </Link>
+                  <Link href={"/admin"} className={navigationMenuTriggerStyle()}>Admin</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/funding" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Funding
-                    </NavigationMenuLink>
-                  </Link>
+                    <Link href={"/funding"} className={navigationMenuTriggerStyle()}>Funding</Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -72,5 +60,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-  )
+  );
 }
