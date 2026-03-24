@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--foreground)] bg-background/80 backdrop-blur-sm">
           <div className="flex items-center justify-between h-16 px-4 max-w-7xl mx-auto">
             {/* Home Button */}
             <Link href="/">

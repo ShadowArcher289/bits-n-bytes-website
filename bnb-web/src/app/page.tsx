@@ -17,7 +17,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex flex-col items-center justify-center relative px-4">
         <div className="space-y-6 text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(25,98%,49%)] animate-in fade-in slide-in-from-bottom-8 duration-1000">
             Bits N&apos; Bytes
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 pb-2">
