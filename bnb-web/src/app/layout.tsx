@@ -32,8 +32,8 @@ export default function RootLayout({
             {/* Home Button */}
             <Link href="/">
               <Button variant="ghost" size="icon" className="hover:bg-primary/10">
-                <Home className="h-5 w-5" />
-                <span className="sr-only">Home</span>
+                {/* <Home className="h-5 w-5" /> */}
+                <span>Home</span>
               </Button>
             </Link>
 
