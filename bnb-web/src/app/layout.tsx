@@ -48,6 +48,13 @@ export default function RootLayout({
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
+                  <Link href="/about" legacyBehavior passHref>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      About
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
                   <Link href="/admin" legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                       Admin
