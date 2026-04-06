@@ -34,6 +34,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Carousell! */}
+      <section className="min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex items-center justify-center px-4">
+        <img src="/images/AnimeBitsNBytes.png" alt="Anime Bits n' Bytes"  className="w-1/4"/>
+      </section>
+
       {/* Features Section */}
       <section
         ref={featuresRef}
@@ -89,19 +94,6 @@ export default function Home() {
         </div>
       </section>
 
-      
-      {/* Carousell! */}
-      <section className="min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex items-center justify-center px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">The Future of Vending</h2>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            We&apos;re building more than just a vending machine - we&apos;re creating an intelligent retail experience
-            that understands and adapts to user needs in real-time. With advanced AI capabilities and sensor technology,
-            Bits N&apos; Bytes represents the next evolution in automated retail.
-          </p>
-        </div>
-        <img src="/images/AnimeBitsNBytes.png" alt="Anime Bits n' Bytes"  className="w-1/4"/>
-      </section>
     </main>
   )
 }
