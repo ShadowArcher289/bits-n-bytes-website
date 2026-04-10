@@ -8,7 +8,7 @@ export default function AboutPage() {
             <h1 className="text-center text-4xl m-8"> About </h1>
 
             <section className="aboutPageSection mb-4">
-                <h3>About the Project Bits n' Bytes</h3>
+                <h3>About the Project Bits &quot;n Bytes</h3>
                 <p>
                     Lorem ipsum dolor sit amet consectetur. Volutpat et viverra augue quisque ornare a egestas diam eleifend. Amet vel molestie sit orci elementum turpis aliquet. Odio tempus et pellentesque a lacus. Mattis a amet a pretium.
                     Aliquet cras dolor tellus est ac aenean eget amet elementum. Cursus et ut pellentesque nibh. Dignissim sed in vulputate leo aliquet malesuada. Consequat quam mattis ullamcorper tristique quis lobortis dui turpis blandit. Dictum facilisis in felis commodo egestas nulla. Mauris turpis lorem id blandit sagittis eu sed. Ipsum interdum fermentum quis sed eget lectus ultrices donec.
