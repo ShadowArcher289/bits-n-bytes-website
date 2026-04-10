@@ -27,13 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--foreground)] bg-background/80 backdrop-blur-sm">
           <div className="flex items-center justify-between h-16 px-4 max-w-7xl mx-auto">
             {/* Home Button */}
             <Link href="/">
               <Button variant="ghost" size="icon" className="hover:bg-primary/10">
-                <Home className="h-5 w-5" />
-                <span className="sr-only">Home</span>
+                {/* <Home className="h-5 w-5" /> */}
+                <span>Home</span>
               </Button>
             </Link>
 
@@ -42,6 +42,9 @@ export default function RootLayout({
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link href={"/contact"} className={navigationMenuTriggerStyle()}>Contact</Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link href={"/about"} className={navigationMenuTriggerStyle()}>About</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link href={"/admin"} className={navigationMenuTriggerStyle()}>Admin</Link>

@@ -4,6 +4,7 @@ import { ArrowDown, Brain, ShoppingBag, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { useRef } from "react"
+import { Carousel } from "@material-tailwind/react";
 
 export default function Home() {
   const featuresRef = useRef<HTMLElement>(null)
@@ -12,13 +13,23 @@ export default function Home() {
     featuresRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  const carouselImages = [
+    "1000015818.jpg",
+    "1000015819.jpg",
+    "1000015820.jpg",
+    "1000015821.jpg",
+    "1000015822.jpg",
+    "AnimeBitsNBytes.png",
+  ];
+
+
   return (
     <main className="min-h-screen w-full overflow-y-auto snap-y snap-mandatory">
       {/* Hero Section */}
       <section className="min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex flex-col items-center justify-center relative px-4">
         <div className="space-y-6 text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            Bits N&apos; Bytes
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(25,98%,49%)] animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            Bits &apos;N Bytes
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 pb-2">
             The Future of Vending, Powered by AI
@@ -33,6 +44,20 @@ export default function Home() {
           </Button>
         </div>
       </section>
+
+      {/* Carousel! */}
+      <Carousel transition={{ duration: 1 }} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        {/* For each image in the /images folder, make an image tag */}
+        {carouselImages.map((file) => (
+          <img
+            key={file}
+            src={`/images/${file}`}
+            alt={file}
+            className="w-1/2 m-auto"
+          />
+        ))}
+
+      </Carousel >
 
       {/* Features Section */}
       <section
@@ -88,6 +113,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+
     </main>
   )
 }

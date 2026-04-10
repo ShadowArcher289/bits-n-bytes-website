@@ -9,20 +9,22 @@ import { useState, useEffect, useRef } from "react"
 import { connectMQTT } from "@/lib/mqttClient"
 import type { MqttClient } from 'mqtt'
 
-const ITEM_OPTIONS = [
-  'Sour Patch Kids', 
-  'Skittles Gummies',
-  'Little Bites Chocolate',
-  'Little Bites Party',
-  'Little Bites Blueberry', 
-  'Swedish Fish Mini Tropical',
-  'Swedish Fish Original',
-  'Welch\'s Fruit Snacks',
-  'Brownie Brittle Chocolate Chip', 
-  '12 Pack Wild Cherry Pepsi', 
-  '12 Pack Loganberry',
-  'Wild Cherry Pepsi Can',
-  'EMPTY']
+
+
+  const ITEM_ID_MAP: Record<string, number> = {
+    'Sour Patch Kids': 2,
+    'Little Bites': 4,
+    'Brownie Brittle Chocolate Chip': 3,
+    '12 Pack Wild Cherry Pepsi': 5,
+    'Livesaver Gummies': 6,
+    'Swedish Fish': 7,
+    'Mike & Ike': 8,
+    'EMPTY': -1
+  }
+
+  const ITEM_OPTIONS = Object.keys(ITEM_ID_MAP)
+
+  
 
 type ButtonState = 'neutral' | 'yellow' | 'green'
 
@@ -35,22 +37,41 @@ export default function TareScreen() {
   const mqttRef = useRef<MqttClient | null>(null)
 
   useEffect(() => {
-    const mqttClient = connectMQTT()
-    mqttRef.current = mqttClient
+    console.log('TareScreen mounted');
+    console.log('Attempting to connect to MQTT...');
+    const mqttClient = connectMQTT();
+    mqttRef.current = mqttClient;
+    console.log('MQTT Client instance:', mqttClient);
 
-    mqttClient.subscribe('shelf/data')
+    mqttClient.on('connect', () => {
+      console.log('Successfully connected to MQTT broker (from TareScreen)!');
+      mqttClient.subscribe('shelf/tare');
+    });
 
     mqttClient.on('message', (topic: string, message: Buffer) => {
-      if (topic === 'shelf/data') {
-        const data = JSON.parse(message.toString())
-        console.log('Tare status received:', data)
+      if (topic === 'shelf/tare') {
+        const data = JSON.parse(message.toString());
+        console.log('Tare status received:', data);
       }
-    })
+    });
+
+    mqttClient.on('error', (err) => {
+      console.error('MQTT connection error (from TareScreen):', err);
+    });
+
+    mqttClient.on('disconnect', () => {
+      console.log('Disconnected from MQTT broker (from TareScreen).');
+    });
+
+    mqttClient.on('reconnect', () => {
+      console.log('Attempting to reconnect to MQTT broker (from TareScreen)...');
+    });
 
     return () => {
-      mqttClient.end()
-    }
-  }, [])
+      console.log('Unmounting TareScreen, ending MQTT client.');
+      mqttClient.end();
+    };
+  }, []);
 
   const cycleState = async (index: number) => {
     const shelfNumber = Math.floor(index / 4)
@@ -64,6 +85,7 @@ export default function TareScreen() {
     })
 
     const payload = {
+      calibrationWeight: 100,
       shelves: {
         [mac]: {
           slots: [slotIndex]
@@ -71,7 +93,7 @@ export default function TareScreen() {
       }
     }
 
-    mqttRef.current?.publish('shelf/data', JSON.stringify(payload), { qos: 1 }, (err) => {
+    mqttRef.current?.publish('shelf/tare', JSON.stringify(payload), { qos: 1 }, (err) => {
       if (!err) {
         setButtonStates(prevStates => {
           const newStates = [...prevStates]
@@ -86,8 +108,8 @@ export default function TareScreen() {
 
   const getMacForShelf = (shelfNumber: number): string => {
     const shelfMacMap: Record<number, string> = {
-      0: "80:65:99:49:EF:8E",
-      1: "80:65:99:E3:EF:50",
+      0: "80:65:99:E3:EF:50",
+      1: "80:65:99:49:EF:8E",
       2: "80:65:99:E3:8B:92",
       3: "MAC_1"
     }
@@ -107,11 +129,13 @@ export default function TareScreen() {
 
   const renderShelf = (shelfNumber: number, startIndex: number) => {
     const positions = ['A', 'B', 'C', 'D']
-
+  
     return (
       <Card className="p-4">
         <CardHeader className="p-2">
-          <CardTitle className="text-xl text-center">Shelf {shelfNumber}</CardTitle>
+          <CardTitle className="text-xl text-center">
+            {getMacForShelf(shelfNumber)}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-4 justify-center">
@@ -132,6 +156,7 @@ export default function TareScreen() {
       </Card>
     )
   }
+  
 
   const resetButtons = () => setButtonStates(Array(16).fill('neutral'))
 
@@ -154,7 +179,7 @@ export default function TareScreen() {
       )
     }
 
-    mqttRef.current?.publish('shelf/data', JSON.stringify(payload), { qos: 1 })
+    mqttRef.current?.publish('shelf/tare', JSON.stringify(payload), { qos: 1 })
   }
 
   return (
@@ -181,20 +206,7 @@ export default function TareScreen() {
           <h2 className="text-2xl font-semibold mb-4 text-center">Update Shelf Info</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <Label>Shelf Letter</Label>
-              <Select onValueChange={setFormShelfLetter} defaultValue={formShelfLetter}>
-                <SelectTrigger>
-                  <SelectValue className="text-grey" placeholder="Select letter" />
-                </SelectTrigger>
-                <SelectContent>
-                  {['A', 'B', 'C', 'D'].map(letter => (
-                    <SelectItem key={letter} value={letter} className="text-grey">{letter}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label>Slot Number</Label>
+              <Label>Shelf</Label>
               <Select onValueChange={setFormShelfNumber} defaultValue={formShelfNumber}>
                 <SelectTrigger>
                   <SelectValue className="text-grey" placeholder="Select number" />
@@ -202,6 +214,19 @@ export default function TareScreen() {
                 <SelectContent>
                   {[0, 1, 2, 3].map(num => (
                     <SelectItem key={num} value={num.toString()} className="text-grey">{num}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Slot</Label>
+              <Select onValueChange={setFormShelfLetter} defaultValue={formShelfLetter}>
+                <SelectTrigger>
+                  <SelectValue className="text-grey" placeholder="Select letter" />
+                </SelectTrigger>
+                <SelectContent>
+                  {['A', 'B', 'C', 'D'].map(letter => (
+                    <SelectItem key={letter} value={letter} className="text-grey">{letter}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -229,6 +254,7 @@ export default function TareScreen() {
               onClick={() => {
                 const shelfIndex = parseInt(formShelfNumber)
                 const slotIndex = ['A', 'B', 'C', 'D'].indexOf(formShelfLetter)
+                console.log("Shelf Index:", shelfIndex)
                 const mac = getMacForShelf(shelfIndex)
 
                 const payload = {
@@ -236,7 +262,7 @@ export default function TareScreen() {
                     [mac]: {
                       slotInfo: {
                         [slotIndex]: {
-                          type: formItemType,
+                          itemId: ITEM_ID_MAP[formItemType],
                           quantity: parseInt(formItemQuantity)
                         }
                       }
@@ -244,7 +270,7 @@ export default function TareScreen() {
                   }
                 }
 
-                mqttRef.current?.publish('shelf/data', JSON.stringify(payload), { qos: 1 }, (err) => {
+                mqttRef.current?.publish('shelf/set/item', JSON.stringify(payload), { qos: 1 }, (err) => {
                   if (err) {
                     console.error("Failed to publish item update:", err)
                   } else {
