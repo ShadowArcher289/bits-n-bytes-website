@@ -12,6 +12,16 @@ export default function Home() {
     featuresRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  const carousellImages = [
+    "AnimeBitsNBytes.png",
+    "1000015818.jpg",
+    "1000015819.jpg",
+    "1000015820.jpg",
+    "1000015821.jpg",
+    "1000015822.jpg",
+  ];
+
+
   return (
     <main className="min-h-screen w-full overflow-y-auto snap-y snap-mandatory">
       {/* Hero Section */}
@@ -36,7 +46,17 @@ export default function Home() {
 
       {/* Carousell! */}
       <section className="min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex items-center justify-center px-4">
+        {/* For each image in the /images folder, make an image tag */}
         <img src="/images/AnimeBitsNBytes.png" alt="Anime Bits n' Bytes"  className="w-1/4"/>
+        {carousellImages.map((file) => (
+          <img
+            key={file}
+            src={`/images/${file}`}
+            alt={file}
+            className="w-1/4"
+          />
+        ))}
+
       </section>
 
       {/* Features Section */}
