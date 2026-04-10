@@ -131,7 +131,7 @@ export default function RegistrationPage() {
             <div className="space-y-2">
               <Label htmlFor="nfcToken">NFC Token Number</Label>
               <div className="flex space-x-2">
-                <Input id="nfcToken" name="nfcToken" placeholder="Tap card to scan" value={formData.nfcToken} onChange={handleChange} required />
+                <Input className="border-red-600 border-4 focus:border-black" id="nfcToken" name="nfcToken" placeholder="Tap card to scan (select this box first)" value={formData.nfcToken} onChange={handleChange} required />
                 <Button type="button" onClick={handleNfcScan} disabled={nfcLoading}>
                   {nfcLoading ? 'Scanning...' : <RadioTower />}
                 </Button>
