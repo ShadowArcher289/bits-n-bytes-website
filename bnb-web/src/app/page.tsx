@@ -3,7 +3,8 @@
 import { ArrowDown, Brain, ShoppingBag, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
+import { Carousel } from "@material-tailwind/react";
 
 export default function Home() {
   const featuresRef = useRef<HTMLElement>(null)
@@ -13,12 +14,12 @@ export default function Home() {
   }
 
   const carouselImages = [
-    "AnimeBitsNBytes.png",
     "1000015818.jpg",
     "1000015819.jpg",
     "1000015820.jpg",
     "1000015821.jpg",
     "1000015822.jpg",
+    "AnimeBitsNBytes.png",
   ];
 
 
@@ -45,19 +46,18 @@ export default function Home() {
       </section>
 
       {/* Carousel! */}
-      <section className="carousel-container min-h-screen w-full snap-start bg-gradient-to-b from-background to-background/50 flex items-center justify-center px-4">
+      <Carousel transition={{ duration: 1 }} placeholder={undefined} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
         {/* For each image in the /images folder, make an image tag */}
-        {/* <img src="/images/AnimeBitsNBytes.png" alt="Anime Bits n' Bytes"  className="w-1/4 carousel-item"/> */}
-        {carouselImages.map((file, index) => (
+        {carouselImages.map((file) => (
           <img
             key={file}
             src={`/images/${file}`}
             alt={file}
-            className="w-1/4"
+            className="w-1/2 m-auto"
           />
         ))}
 
-      </section>
+      </Carousel >
 
       {/* Features Section */}
       <section
