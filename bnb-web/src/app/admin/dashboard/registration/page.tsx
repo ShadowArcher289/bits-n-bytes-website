@@ -99,7 +99,7 @@ export default function RegistrationPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-background to-background/50">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md bg-black">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-2">
             <div className="p-3 rounded-full bg-primary/10">
